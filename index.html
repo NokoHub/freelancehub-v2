@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FreelanceHub V2</title><meta name="description" content="Marketplace freelance Indonesia">
+<link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="/">FREELANCE<span>HUB</span></a>
+<nav><a href="#jobs">Pekerjaan</a><a href="#how">Cara Kerja</a><a href="/dashboard.html">Dashboard</a></nav>
+<div id="auth"><button class="btn light" onclick="showAuth('login')">Masuk</button><button class="btn" onclick="showAuth('register')">Daftar</button></div>
+</div></header>
+<section class="hero"><div class="wrap heroGrid"><div><small>MARKETPLACE FREELANCE INDONESIA</small><h1>Kerja freelance,<br><b>lebih mudah.</b></h1><p>Cari proyek, kirim proposal, kelola pekerjaan, dan bangun penghasilanmu dari satu platform.</p><button class="btn big" onclick="showAuth('register')">Mulai Gratis →</button></div>
+<div class="heroBox"><b>⚡ Proyek terbaru</b><div id="featured"></div></div></div></section>
+<main class="wrap" id="jobs"><div class="head"><div><small>OPEN PROJECTS</small><h2>Cari pekerjaan</h2></div><button class="btn" onclick="requireLogin('post')">+ Pasang Proyek</button></div>
+<div class="filters"><input id="q" placeholder="Cari proyek atau skill..." oninput="loadJobs()"><select id="cat" onchange="loadJobs()"><option value="">Semua kategori</option><option>Desain</option><option>Programming</option><option>Writing</option><option>Marketing</option><option>Video</option></select></div><div id="jobsList" class="cards"></div></main>
+<section class="how" id="how"><div class="wrap"><small>CARA KERJA</small><h2>Mulai dalam 3 langkah</h2><div class="steps"><div><b>01</b><h3>Buat akun</h3><p>Daftar sebagai freelancer atau client.</p></div><div><b>02</b><h3>Temukan proyek</h3><p>Kirim proposal pada pekerjaan yang sesuai.</p></div><div><b>03</b><h3>Selesaikan</h3><p>Kelola proyek dan pembayaran dengan aman.</p></div></div></div></section>
+<footer><div class="wrap">© 2026 FreelanceHub · Marketplace freelance</div></footer>
+<div id="modal" class="modal"><div class="box"><button class="x" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<script src="/app.js"></script></body></html>

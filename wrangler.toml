@@ -1,0 +1,12 @@
+name = "freelancehub-v2"
+compatibility_date = "2026-09-07"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "freelancehub-db"
+database_id = "f1e796c5-5e35-4a45-bdb3-513c9245e5d9"
+
+[vars]
+# JWT_SECRET sebaiknya diisi sebagai secret Cloudflare:
+# wrangler pages secret put JWT_SECRET

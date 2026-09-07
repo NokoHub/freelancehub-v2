@@ -1,0 +1,8 @@
+const enc=new TextEncoder(),dec=new TextDecoder();
+function b64u(a){return btoa(String.fromCharCode(...new Uint8Array(a))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function ub64(s){s=s.replace(/-/g,"+").replace(/_/g,"/");return Uint8Array.from(atob(s),c=>c.charCodeAt(0))}
+export async function hashPassword(password,salt=b64u(crypto.getRandomValues(new Uint8Array(16)))){const key=await crypto.subtle.importKey("raw",enc.encode(password),"PBKDF2",false,["deriveBits"]);const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:ub64(salt),iterations:120000,hash:"SHA-256"},key,256);return{hash:b64u(bits),salt}}
+export async function verifyPassword(p,h,s){return (await hashPassword(p,s)).hash===h}
+async function key(secret){return crypto.subtle.importKey("raw",enc.encode(secret),{name:"HMAC",hash:"SHA-256"},false,["sign","verify"])}
+export async function sign(payload,secret){const head=b64u(enc.encode(JSON.stringify({alg:"HS256",typ:"JWT"}))),body=b64u(enc.encode(JSON.stringify({...payload,exp:Math.floor(Date.now()/1000)+86400}))),data=head+"."+body,sig=await crypto.subtle.sign("HMAC",await key(secret),enc.encode(data));return data+"."+b64u(sig)}
+export async function verify(token,secret){const [h,p,s]=token.split(".");if(!h||!p||!s)throw Error("Token tidak valid");if(!await crypto.subtle.verify("HMAC",await key(secret),ub64(s),enc.encode(h+"."+p)))throw Error("Token tidak valid");const x=JSON.parse(dec.decode(ub64(p)));if(x.exp<Date.now()/1000)throw Error("Sesi habis");return x}
